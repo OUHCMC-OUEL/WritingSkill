@@ -1,0 +1,11 @@
+from django.urls import path, include
+from . import views
+from rest_framework.routers import DefaultRouter
+
+r = DefaultRouter()
+r.register('writing', views.WritingView, basename='writing')
+
+
+urlpatterns = [
+    path('', include(r.urls)),
+]
