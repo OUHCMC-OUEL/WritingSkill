@@ -11,5 +11,5 @@ Một nhánh nhỏ của hệ thống, làm về rèn luyện kỹ năng viết
 | front-end      | Reactjs |
 | back-end        | django   |
 | css        | taiwind + antdesign   |
-| AI       | germini 2.5 flask  |
+| AI       | germini 2.5 flash  |
 | deploy       | Vite   |
