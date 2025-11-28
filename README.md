@@ -26,11 +26,8 @@ _Định hướng phát triển_
 
 ### Cấu trúc thư mục
 WritingSkill/
-│
 ├── backend/                # Mã nguồn backend (API, Django)
-│
 ├── frontend/               # Mã nguồn frontend (React + Vite)
-│
 └── run.sh                  # Script tự động chạy backend + frontend
 
 ### Công cụ sử dụng
