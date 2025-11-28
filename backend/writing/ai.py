@@ -42,7 +42,7 @@ Input: "He go to school yesterday."
 Output:
 {{
     "output": "He went to school yesterday.",
-    "vocabulary": "OK",
+    "vocabulary": "Không có lỗi sai từ vựng",
     "grammar": "Lỗi thì động từ, đã sửa sang quá khứ",
     "coherence": "Câu rõ ràng, mạch lạc",
     "issues": [
