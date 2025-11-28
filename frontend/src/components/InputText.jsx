@@ -19,7 +19,7 @@ function InputText({ onReceiveData }) {
         });
 
         const data = await response.json();
-        setRes(data.correct_text)
+        setRes(data.result)
         onReceiveData(data);
         setLoading(false)
     };

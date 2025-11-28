@@ -18,6 +18,11 @@ function TextBox({data}){
             label: 'Coherence & Cohesion',
             children: <p>{data? data.coh : "No data"}</p>,
         },
+//         {
+//             key: '4',
+//             label: 'Issue',
+//             children: <p>{data? data.issues : "No data"}</p>,
+//         },
     ];
     return (
         <Collapse className='w-100 h-200' accordion items={items}/>

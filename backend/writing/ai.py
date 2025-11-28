@@ -1,80 +1,105 @@
+import os
 import json
-import re
+import genai
 
-from google import genai
-from django.conf import settings
+def normalize_field(text):
+    if not text:
+        return ""
+    return " ".join(text.split())
 
-GEMINI_API_KEY = settings.GEMINI_API_KEY
+def check_grammar(input_text):
+    if not isinstance(input_text, str) or not input_text.strip():
+        return {
+            "result": None,
+            "vocabulary": "Input không hợp lệ",
+            "grammar": "Input không hợp lệ",
+            "coh": "Input không hợp lệ",
+            "issues": []
+        }
 
-client = genai.Client(api_key=GEMINI_API_KEY)
-def parse_gemini_json(text):
-    text_clean = re.sub(r"^```(?:json)?\n", "", text)
-    text_clean = re.sub(r"```$", "", text_clean.strip())
-    try:
-        return json.loads(text_clean)
-    except json.JSONDecodeError:
-        return {"error": "Invalid JSON from Gemini", "raw": text}
-
-def check_grammar(text):
     prompt = f"""
-    Task: Correct the English sentence and provide concise feedback.
-    - Return JSON ONLY, no extra text.
-    - If not English, return:
-    {{
-      "correct_text": null,
-      "vocabulary": "Not English",
-      "grammar": "Not English",
-      "coh": "Not English",
-      "issues": []
-    }}
+You are a system that improves English writing skills. Correct grammar, vocabulary, coherence and cohesion. Provide concise explanations for each correction in Vietnamese.
 
-    - If English, provide:
-      1. "correct_text": corrected sentence.
-      2. "vocabulary": short note on vocabulary issues.
-      3. "grammar": short note on grammar issues.
-      4. "coh": short note on coherence/cohesion.
-      5. "issues": list of detailed corrections:
-          - loc: the word or phrase
-          - issue: what type of error it is
-          - example: how it was wrong
-          - fix: suggested fix
+Return ONLY JSON in the following format:
+{{
+    "result": "Corrected English sentence or paragraph (single paragraph).",
+    "vocabulary": "Short explanation in Vietnamese about vocabulary issues, gộp thành một đoạn duy nhất.",
+    "grammar": "Short explanation in Vietnamese about grammar issues, gộp thành một đoạn duy nhất.",
+    "coh": "Short explanation in Vietnamese about coherence/cohesion, gộp thành một đoạn duy nhất.",
+    "issues": [
+        {{
+            "loc": "word or phrase",
+            "issue": "type of error",
+            "example": "how it was wrong",
+            "fix": "suggested fix"
+        }}
+    ]
+}}
 
-    FEW-SHOT EXAMPLES:
+Few-shot examples:
 
-    Input: "He go to school yesterday."
-    Output:
-    {{
-      "correct_text": "He went to school yesterday.",
-      "vocabulary": "OK",
-      "grammar": "Verb tense error",
-      "coh": "Clear",
-      "issues": [
+Input: "He go to school yesterday."
+Output:
+{{
+    "result": "He went to school yesterday.",
+    "vocabulary": "Không có lỗi sai từ vựng",
+    "grammar": "Lỗi thì động từ, đã sửa sang quá khứ",
+    "coh": "Câu rõ ràng, mạch lạc",
+    "issues": [
         {{"loc": "go", "issue": "wrong tense", "example": "go → should be past", "fix": "went"}}
-      ]
-    }}
+    ]
+}}
 
-    Input: "I am very boring in the class."
-    Output:
-    {{
-      "correct_text": "I am very bored in the class.",
-      "vocabulary": "Wrong adjective",
-      "grammar": "Participle/adjective choice",
-      "coh": "Clear",
-      "issues": [
+Input: "I am very boring in the class."
+Output:
+{{
+    "result": "I am very bored in the class.",
+    "vocabulary": "Sai tính từ, dùng bored thay vì boring",
+    "grammar": "Sai dạng tính từ mô tả cảm giác, đã sửa",
+    "coh": "Câu rõ ràng, mạch lạc",
+    "issues": [
         {{"loc": "boring", "issue": "wrong adjective for feeling", "example": "boring → describes object, not feeling", "fix": "bored"}}
-      ]
-    }}
+    ]
+}}
 
-    NOW PROCESS:
-    Input: "{text}"
-    """
+Now process:
+Input: "{input_text}"
+"""
 
+    # Gọi Gemini API
+    from google import genai
+    from django.conf import settings
+
+    GEMINI_API_KEY = settings.GEMINI_API_KEY
+    client = genai.Client(api_key=GEMINI_API_KEY)
     response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=[prompt]
-    )
-    result_dict = parse_gemini_json(response.text)
-    return result_dict
+                model="gemini-2.5-flash",
+                contents=[prompt]
+            )
 
-if __name__ == "__main__":
-    print(check_grammar("Yesterday I go to the market and buy many fruit. The weather was very hot so I don’t feels good. My friend tell me he will meets me there but he never come. I was wait for him for two hour before I leaving. It make me very annoying."))
+    result_text = response.text
+
+    try:
+        start = result_text.find("{")
+        end = result_text.rfind("}") + 1
+        json_str = result_text[start:end]
+        data = json.loads(json_str)
+
+        result = {
+            "result": normalize_field(data.get("result")),
+            "vocabulary": normalize_field(data.get("vocabulary")),
+            "grammar": normalize_field(data.get("grammar")),
+            "coh": normalize_field(data.get("coh")),
+            "issues": data.get("issues", [])
+        }
+        return result
+
+    except Exception as e:
+        return {
+            "result": "Lỗi phân tích",
+            "vocabulary": "Lỗi phân tích",
+            "grammar": "Lỗi phân tích",
+            "coh": "Lỗi phân tích",
+            "issues": [],
+            "error": str(e)
+        }
