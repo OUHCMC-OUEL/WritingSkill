@@ -13,7 +13,7 @@ npm run dev &
 echo "=== Tạo môi trường ảo... ==="
 cd ../backend
 python -m venv venv
-source venv/Scripts/activate
+. venv/Scripts/activate
 
 echo "=== cài đặt thư viện từ requirements.txt ==="
 pip install -r requirements.txt
