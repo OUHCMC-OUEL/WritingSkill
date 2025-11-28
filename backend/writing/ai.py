@@ -1,6 +1,7 @@
 import os
 import json
 import genai
+from django.conf import settings
 
 def normalize_field(text):
     if not text:
@@ -13,7 +14,7 @@ def check_grammar(input_text):
             "result": None,
             "vocabulary": "Input không hợp lệ",
             "grammar": "Input không hợp lệ",
-            "coherence": "Input không hợp lệ",
+            "coh": "Input không hợp lệ",
             "issues": []
         }
 
@@ -25,7 +26,7 @@ Return ONLY JSON in the following format:
     "result": "Corrected English sentence or paragraph (single paragraph).",
     "vocabulary": "Short explanation in Vietnamese about vocabulary issues, gộp thành một đoạn duy nhất.",
     "grammar": "Short explanation in Vietnamese about grammar issues, gộp thành một đoạn duy nhất.",
-    "coh": "Short explanation in Vietnamese about coherence/cohesion, gộp thành một đoạn duy nhất."
+    "coh": "Short explanation in Vietnamese about coherence/cohesion, gộp thành một đoạn duy nhất.",
     "issues": [
         {{
             "loc": "word or phrase",
@@ -66,33 +67,29 @@ Now process:
 Input: "{input_text}"
 """
 
-    # Gọi Gemini API
-    from google import genai
-    from django.conf import settings
-
-    GEMINI_API_KEY = settings.GEMINI_API_KEY
-    client = genai.Client(api_key=GEMINI_API_KEY)
+    client = genai.Client(api_key=settings.GEMINI_API_KEY)
     response = client.models.generate_content(
-                model="gemini-2.5-flash",
-                contents=[prompt]
-            )
+        model="gemini-2.5-flash",
+        contents=[prompt]
+    )
 
     result_text = response.text
 
     try:
+        # Extract JSON only
         start = result_text.find("{")
         end = result_text.rfind("}") + 1
         json_str = result_text[start:end]
+
         data = json.loads(json_str)
 
-        result = {
+        return {
             "result": normalize_field(data.get("result")),
             "vocabulary": normalize_field(data.get("vocabulary")),
             "grammar": normalize_field(data.get("grammar")),
             "coh": normalize_field(data.get("coh")),
             "issues": data.get("issues", [])
         }
-        return result
 
     except Exception as e:
         return {
