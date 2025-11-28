@@ -24,11 +24,12 @@ Cải thiện AI và giao diện
    ```
 3. Chạy file run.sh để setup dự án
    ```
+   cd WritingSkill
    ./run.sh
    ```
 5. Đường dẫn truy cập giao diện và backend api:
-   - Frontend: https://localhost:5173
-   - Backend: https://localhost:8000
+   - Frontend: http://localhost:5173
+   - Backend:  http://127.0.0.1:8000/
 
 ### Cấu trúc thư mục
 ```
