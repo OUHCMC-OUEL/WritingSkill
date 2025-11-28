@@ -13,7 +13,7 @@ def check_grammar(input_text):
             "result": None,
             "vocabulary": "Input không hợp lệ",
             "grammar": "Input không hợp lệ",
-            "coh": "Input không hợp lệ",
+            "coherence": "Input không hợp lệ",
             "issues": []
         }
 
@@ -25,7 +25,7 @@ Return ONLY JSON in the following format:
     "result": "Corrected English sentence or paragraph (single paragraph).",
     "vocabulary": "Short explanation in Vietnamese about vocabulary issues, gộp thành một đoạn duy nhất.",
     "grammar": "Short explanation in Vietnamese about grammar issues, gộp thành một đoạn duy nhất.",
-    "coh": "Short explanation in Vietnamese about coherence/cohesion, gộp thành một đoạn duy nhất.",
+    "coh": "Short explanation in Vietnamese about coherence/cohesion, gộp thành một đoạn duy nhất."
     "issues": [
         {{
             "loc": "word or phrase",
