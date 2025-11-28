@@ -15,10 +15,9 @@ lockfile==0.12.2
 lxml==6.0.2
 numpy==2.2.6
 ordereddict==1.1
-protobuf==6.33.1
+protobuf==5.28.3
 pyOpenSSL==25.3.0
 python-dotenv==1.2.1
 toml==0.10.2
 tornado==6.5.2
 zipp==3.23.0
-
