@@ -11,6 +11,7 @@ _Vấn đề đã giải quyết từ buổi họp trước_
 _Vấn đề phát sinh trong quá trình làm_
 _Những điều chưa hoàn thiện_
 _Định hướng phát triển_
+
 ### Cách chạy dự án
 1. Mở git bash và clone dự án từ github:
    ```
@@ -25,10 +26,12 @@ _Định hướng phát triển_
    - Backend: https://localhost:8000
 
 ### Cấu trúc thư mục
+```
 WritingSkill/
 ├── backend/                # Mã nguồn backend (API, Django)
 ├── frontend/               # Mã nguồn frontend (React + Vite)
 └── run.sh                  # Script tự động chạy backend + frontend
+```
 
 ### Công cụ sử dụng
 | Phần       | Công cụ |
