@@ -9,8 +9,13 @@ _Vấn đề đã giải quyết từ buổi họp trước_
    + Bổ sung thêm script sh hoặc tải tự động gói thư viện và cấu hình
 
 _Vấn đề phát sinh trong quá trình làm_
+Do không có nhiều thời gian nên chưa tìm hiểu để áp dụng rag, thay vào đó dùng few-shot
+
 _Những điều chưa hoàn thiện_
+Chưa có database và thắc mắc lưu database những gì
+
 _Định hướng phát triển_
+Cải thiện AI và giao diện
 
 ### Cách chạy dự án
 1. Mở git bash và clone dự án từ github:
