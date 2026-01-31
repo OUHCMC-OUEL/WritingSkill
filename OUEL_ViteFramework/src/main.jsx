@@ -2,8 +2,8 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from "react-router";
 import App from './App.jsx'
-import WritingApp from './WritingApp/screens/WritingApp.jsx';
 import QuizApp from './QuizApp/QuizApp.jsx';
+import WritingApp from './pages/WritingApp.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

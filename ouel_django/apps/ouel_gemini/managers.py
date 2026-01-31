@@ -9,88 +9,116 @@ few_shot_examples = """
 Example 1:
 Input: "I has finish my homework yesterday."
 Output:
-{
-  "correctness": {
-    "review": "Sai thì quá khứ và chia động từ.",
-    "suggestion": "I finished my homework yesterday."
+{{
+  "id": "eval_001",
+  "original": "I has finish my homework yesterday.",
+  "error": null,
+
+  "grammar": {
+    "result": "I finished my homework yesterday.",
+    "explanation": "Sai thì quá khứ và chia động từ.",
+    "issues": [
+      {
+        "id": "g1",
+        "message": "Sai chia động từ và thì quá khứ.",
+        "original": "has finish",
+        "fix": "finished",
+        "start": 2,
+        "end": 12
+      }
+    ]
   },
+
   "clarity": {
-    "review": "Câu ngắn gọn, dễ hiểu.",
-    "suggestion": null
+    "result": "I finished my homework yesterday.",
+    "explanation": "Câu rõ ràng, dễ hiểu.",
+    "issues": []
   },
+
   "engagement": {
-    "review": "Câu đơn giản, chưa tạo cảm xúc.",
-    "suggestion": "I was happy after finishing my homework yesterday."
+    "result": "I was happy after finishing my homework yesterday.",
+    "explanation": "Câu còn đơn giản, chưa tạo cảm xúc.",
+    "issues": [
+      {
+        "id": "e1",
+        "message": "Có thể thêm cảm xúc để câu sinh động hơn.",
+        "original": "I finished my homework yesterday.",
+        "fix": "I was happy after finishing my homework yesterday.",
+        "start": 0,
+        "end": 36
+      }
+    ]
   },
+
   "delivery": {
-    "review": "Giọng văn trung tính, phù hợp.",
-    "suggestion": null
+    "result": "I finished my homework yesterday.",
+    "explanation": "Giọng văn trung tính, phù hợp.",
+    "issues": []
   }
 }
 
 Example 2:
-Input: "This essay talk about importance of English in modern world."
+Input: "I enjoy learning English because it helps me communicate with people around the world."
 Output:
 {
+  "id": "eval_002",
+  "error": null,
+
   "correctness": {
-    "review": "Thiếu mạo từ và chia động từ.",
-    "suggestion": "This essay talks about the importance of English in the modern world."
+    "result": "I enjoy learning English because it helps me communicate with people around the world.",
+    "explanation": "none",
+    "issues": []
   },
+
   "clarity": {
-    "review": "Ý rõ nhưng thiếu mạo từ làm câu kém tự nhiên.",
-    "suggestion": "This essay discusses the importance of English in the modern world."
+    "result": "I enjoy learning English because it helps me communicate with people around the world.",
+    "explanation": "none",
+    "issues": []
   },
+
   "engagement": {
-    "review": "Giọng văn học thuật, chưa hấp dẫn.",
-    "suggestion": "This essay explores the importance of English in today’s modern world."
+    "result": "I enjoy learning English because it helps me communicate with people around the world.",
+    "explanation": "none",
+    "issues": []
   },
+
   "delivery": {
-    "review": "Giọng văn học thuật, phù hợp với bài luận.",
-    "suggestion": null
+    "result": "I enjoy learning English because it helps me communicate with people around the world.",
+    "explanation": "none",
+    "issues": []
   }
 }
 
 Example 3:
-Input: "I enjoy learning English because it helps me communicate with people around the world."
-Output:
-{
-  "correctness": {
-    "review": "Không có lỗi ngữ pháp hoặc chính tả.",
-    "suggestion": null
-  },
-  "clarity": {
-    "review": "Câu rõ ràng, mạch lạc.",
-    "suggestion": null
-  },
-  "engagement": {
-    "review": "Câu tự nhiên và tích cực.",
-    "suggestion": null
-  },
-  "delivery": {
-    "review": "Giọng văn thân thiện, phù hợp.",
-    "suggestion": null
-  }
-}
-
-Example 4:
 Input: "Xin chào bạn"
 Output:
 {
-  "correctness": {
-    "review": "Đây không phải là câu tiếng Anh nên không thể đánh giá.",
-    "suggestion": null
+  "id": "eval_003",
+  "original": "Xin chào bạn",
+  "error": "Nội dung không phải tiếng Anh nên không thể đánh giá.",
+
+  "grammar": {
+    "result": "Xin chào bạn",
+    "explanation": "none",
+    "issues": []
   },
+
   "clarity": {
-    "review": "Đây không phải là câu tiếng Anh nên không thể đánh giá.",
-    "suggestion": null
+    "result": "Xin chào bạn",
+    "explanation": "none",
+    "issues": []
   },
+
   "engagement": {
-    "review": "Đây không phải là câu tiếng Anh nên không thể đánh giá.",
-    "suggestion": null
+    "result": "Xin chào bạn",
+    "explanation": "none",
+    "issues": []
   },
+
   "delivery": {
-    "review": "Đây không phải là câu tiếng Anh nên không thể đánh giá.",
-    "suggestion": null
+    "result": "Xin chào bạn",
+    "explanation": "none",
+    "issues": []
   }
 }
 """
